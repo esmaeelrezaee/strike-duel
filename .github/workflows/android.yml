@@ -78,7 +78,7 @@ jobs:
           architectures/armeabi-v7a=false
           architectures/x86=false
           architectures/x86_64=false
-          keystore/debug="$HOME/.android/debug.keystore"
+          keystore/debug=""
           keystore/debug_user="androiddebugkey"
           keystore/debug_password="android"
           EOF
