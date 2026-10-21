@@ -1,0 +1,50 @@
+name: Build STRIKE DUEL
+
+on:
+  workflow_dispatch:
+
+jobs:
+  windows:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.4.1
+          use-dotnet: false
+          include-templates: true
+      - name: Import project
+        run: godot --headless --path godot --editor --quit
+      - name: Create export preset
+        run: |
+          cat > godot/export_presets.cfg <<'EOF'
+          [preset.0]
+          name="Windows Desktop"
+          platform="Windows Desktop"
+          runnable=true
+          dedicated_server=false
+          custom_features=""
+          export_filter="all_resources"
+          include_filter=""
+          exclude_filter=""
+          export_path="build/STRIKE_DUEL.exe"
+          encryption_include_filters=""
+          encryption_exclude_filters=""
+          encrypt_pck=false
+          encrypt_directory=false
+          [preset.0.options]
+          binary_format/architecture="x86_64"
+          binary_format/embed_pck=true
+          texture_format/bptc=true
+          texture_format/s3tc=true
+          texture_format/etc2=false
+          EOF
+      - name: Export Windows game
+        run: |
+          mkdir -p godot/build
+          godot --headless --path godot --export-release "Windows Desktop" build/STRIKE_DUEL.exe
+      - uses: actions/upload-artifact@v4
+        with:
+          name: STRIKE_DUEL_Windows
+          path: godot/build/STRIKE_DUEL.exe
+          if-no-files-found: error
