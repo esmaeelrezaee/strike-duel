@@ -79,8 +79,8 @@ jobs:
           architectures/x86=false
           architectures/x86_64=false
           keystore/debug=""
-          keystore/debug_user="androiddebugkey"
-          keystore/debug_password="android"
+          keystore/debug_user=""
+          keystore/debug_password=""
           EOF
 
       - name: Import project
